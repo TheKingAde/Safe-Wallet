@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-=======
-import { FaSpinner } from 'react-icons/fa'; // Import spinner icon
->>>>>>> master
 
 function LoginForm({ onSwitch }) {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-<<<<<<< HEAD
-=======
-  const [loading, setLoading] = useState(false); // Add loading state
->>>>>>> master
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,10 +26,6 @@ function LoginForm({ onSwitch }) {
     }
 
     console.log(`Logging in with Identifier: ${identifier}, Password: ${password}`);
-<<<<<<< HEAD
-=======
-    setLoading(true); // Start loading spinner
->>>>>>> master
     try {
       const response = await fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
@@ -53,11 +41,7 @@ function LoginForm({ onSwitch }) {
         if (data.access) {
           console.log('Login successful', data.access);
           localStorage.setItem('token', data.access);
-<<<<<<< HEAD
           navigate('/dashboard', { state: { walletAddress: data.wallet_address, balance: data.balance, username:data.username } });
-=======
-          navigate('/dashboard', { state: { walletAddress: data.wallet_address, balance: data.balance, username: data.username } });
->>>>>>> master
         } else {
           console.error('Login response did not include a token');
           setErrors({ login: 'Login response did not include a token' });
@@ -69,11 +53,6 @@ function LoginForm({ onSwitch }) {
     } catch (error) {
       console.error('Network error:', error);
       setErrors({ network: 'Network error occurred. Please try again later.' });
-<<<<<<< HEAD
-=======
-    } finally {
-      setLoading(false); // Stop loading spinner
->>>>>>> master
     }
   };
 
@@ -108,17 +87,8 @@ function LoginForm({ onSwitch }) {
             {showPassword ? "Hide" : "Show"}
           </button>
         </div>
-<<<<<<< HEAD
         <button type="submit" className="bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
           Login
-=======
-        <button
-          type="submit"
-          className={`bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={loading}
-        >
-          {loading ? <FaSpinner className="animate-spin w-6 h-6 mx-auto" /> : 'Login'}
->>>>>>> master
         </button>
       </form>
       <div className="mt-4">

@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-=======
-import { FaSpinner } from 'react-icons/fa'; // Import spinner icon
->>>>>>> master
 
 function SignUpForm({ onSwitch }) {
   const [username, setUsername] = useState('');
@@ -12,11 +8,6 @@ function SignUpForm({ onSwitch }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-<<<<<<< HEAD
-=======
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
->>>>>>> master
 
   const validateUsername = (username) => {
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
@@ -62,12 +53,6 @@ function SignUpForm({ onSwitch }) {
       return;
     }
 
-<<<<<<< HEAD
-=======
-    setLoading(true);
-    setSuccess(false);
-
->>>>>>> master
     try {
       const response = await fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
@@ -78,26 +63,14 @@ function SignUpForm({ onSwitch }) {
       });
       const data = await response.json();
       if (response.ok) {
-<<<<<<< HEAD
         console.log('Registration successful', data);
         onSwitch(); // Switch to login after successful registration
-=======
-        setSuccess(true);
-        setTimeout(() => {
-          onSwitch(); // Switch to login after showing success message
-        }, 2000); // Delay before redirecting
->>>>>>> master
       } else {
         console.error('Registration failed', data);
         setErrors(data);
       }
     } catch (error) {
       console.error('Network error:', error);
-<<<<<<< HEAD
-=======
-    } finally {
-      setLoading(false);
->>>>>>> master
     }
   };
 
@@ -163,17 +136,8 @@ function SignUpForm({ onSwitch }) {
             {showPassword ? "Hide" : "Show"}
           </button>
         </div>
-<<<<<<< HEAD
         <button type="submit" className="bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50">
           Sign Up
-=======
-        <button
-          type="submit"
-          className={`bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={loading}
-        >
-          {loading ? <FaSpinner className="animate-spin w-6 h-6 mx-auto" /> : 'Sign Up'}
->>>>>>> master
         </button>
       </form>
       <div className="mt-4">
@@ -183,14 +147,6 @@ function SignUpForm({ onSwitch }) {
         {errors.password2 && <p className="text-red-500 text-sm mt-1">{errors.password2}</p>}
         {errors.non_field_errors && <p className="text-red-500 text-sm mt-1">{errors.non_field_errors}</p>}
       </div>
-<<<<<<< HEAD
-=======
-      {success && (
-        <div className="mt-6 bg-green-100 text-green-700 p-4 rounded">
-          <p className="text-center font-bold">Sign Up Successful!</p>
-        </div>
-      )}
->>>>>>> master
       <p className="mt-6 text-base lg:text-lg">
         Already have an account? <button onClick={onSwitch} className="text-green-500 hover:underline">Login</button>
       </p>
