@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FaSpinner } from 'react-icons/fa'; // Import spinner icon
+import { FaSpinner } from 'react-icons/fa';
 
 function SignUpForm({ onSwitch }) {
   const [username, setUsername] = useState('');
@@ -11,6 +11,7 @@ function SignUpForm({ onSwitch }) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [mnemonic, setMnemonic] = useState('');
 
   const validateUsername = (username) => {
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
@@ -69,10 +70,8 @@ function SignUpForm({ onSwitch }) {
       });
       const data = await response.json();
       if (response.ok) {
+        setMnemonic(data.mnemonic_phrase);
         setSuccess(true);
-        setTimeout(() => {
-          onSwitch(); // Switch to login after showing success message
-        }, 2000); // Delay before redirecting
       } else {
         console.error('Registration failed', data);
         setErrors(data);
@@ -88,87 +87,132 @@ function SignUpForm({ onSwitch }) {
     setShowPassword(!showPassword);
   };
 
+  const handleCopy = () => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(mnemonic).then(() => {
+        alert('Mnemonic copied to clipboard');
+      }).catch((err) => {
+        console.error('Failed to copy mnemonic: ', err);
+        alert('Failed to copy mnemonic');
+      });
+    } else {
+      alert('Clipboard API not available');
+    }
+  };
+
+  const handleContinue = () => {
+    onSwitch(); // Switch to login page
+  };
+
   return (
     <div className="flex flex-col items-center w-full max-w-lg px-4">
       <h2 className="text-3xl lg:text-4xl font-bold mb-6">Sign Up</h2>
-      <form onSubmit={handleSubmit} className="w-full">
-        <div className="mb-4">
-          <label htmlFor="username" className="block text-base lg:text-lg font-medium text-gray-700">Username</label>
-          <input
-            id="username"
-            type="text"
-            className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.username ? 'border-red-500' : ''}`}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-base lg:text-lg font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            type="email"
-            className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.email ? 'border-red-500' : ''}`}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-4 relative">
-          <label htmlFor="password" className="block text-base lg:text-lg font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.password ? 'border-red-500' : ''}`}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+      {!success ? (
+        <>
+          <form onSubmit={handleSubmit} className="w-full">
+            <div className="mb-4">
+              <label htmlFor="username" className="block text-base lg:text-lg font-medium text-gray-700">Username</label>
+              <input
+                id="username"
+                type="text"
+                className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.username ? 'border-red-500' : ''}`}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-base lg:text-lg font-medium text-gray-700">Email</label>
+              <input
+                id="email"
+                type="email"
+                className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.email ? 'border-red-500' : ''}`}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-4 relative">
+              <label htmlFor="password" className="block text-base lg:text-lg font-medium text-gray-700">Password</label>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.password ? 'border-red-500' : ''}`}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1 text-gray-500"
+                onClick={toggleShowPassword}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            <div className="mb-6 relative">
+              <label htmlFor="confirmPassword" className="block text-base lg:text-lg font-medium text-gray-700">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.password2 ? 'border-red-500' : ''}`}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1 text-gray-500"
+                onClick={toggleShowPassword}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            <button
+              type="submit"
+              className={`bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? <FaSpinner className="animate-spin w-6 h-6 mx-auto" /> : 'Sign Up'}
+            </button>
+          </form>
+          <p className="mt-4 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <button
+              onClick={onSwitch}
+              className="text-green-500 hover:text-green-700 focus:outline-none"
+            >
+              Login
+            </button>
+          </p>
+        </>
+      ) : (
+        <div className="mt-6 bg-green-100 text-green-700 p-4 rounded text-center">
+          <p className="text-lg font-bold mb-4">Sign Up Successful!</p>
+          <p className="mb-4">Your mnemonic phrase:</p>
+          <div className="mb-4 bg-white p-2 rounded shadow-md">
+            <p className="text-lg font-bold text-red-500">{mnemonic}</p>
+          </div>
+          <p className="text-sm text-yellow-600">
+            Do not share these phrases with anyone. Losing these phrases means you could lose access to your funds. These phrases are used for account recovery.
+          </p>
           <button
-            type="button"
-            className="absolute right-3 top-1 text-gray-500"
-            onClick={toggleShowPassword}
+            onClick={handleCopy}
+            className="bg-green-500 text-white px-4 py-2 rounded mt-4 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
           >
-            {showPassword ? "Hide" : "Show"}
+            Copy
           </button>
-        </div>
-        <div className="mb-6 relative">
-          <label htmlFor="confirmPassword" className="block text-base lg:text-lg font-medium text-gray-700">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            type={showPassword ? "text" : "password"}
-            className={`mt-1 p-3 lg:p-4 border border-gray-300 rounded text-base lg:text-lg w-full pr-10 ${errors.password2 ? 'border-red-500' : ''}`}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
           <button
-            type="button"
-            className="absolute right-3 top-1 text-gray-500"
-            onClick={toggleShowPassword}
+            onClick={handleContinue}
+            className="bg-green-500 text-white px-4 py-2 rounded mt-4 ml-4 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
           >
-            {showPassword ? "Hide" : "Show"}
+            Continue
           </button>
-        </div>
-        <button
-          type="submit"
-          className={`bg-green-500 text-white px-6 py-3 lg:py-4 rounded text-base lg:text-lg w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={loading}
-        >
-          {loading ? <FaSpinner className="animate-spin w-6 h-6 mx-auto" /> : 'Sign Up'}
-        </button>
-      </form>
-      <div className="mt-4">
-        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-        {errors.password2 && <p className="text-red-500 text-sm mt-1">{errors.password2}</p>}
-        {errors.non_field_errors && <p className="text-red-500 text-sm mt-1">{errors.non_field_errors}</p>}
-      </div>
-      {success && (
-        <div className="mt-6 bg-green-100 text-green-700 p-4 rounded">
-          <p className="text-center font-bold">Sign Up Successful!</p>
         </div>
       )}
-      <p className="mt-6 text-base lg:text-lg">
-        Already have an account? <button onClick={onSwitch} className="text-green-500 hover:underline">Login</button>
-      </p>
+      {Object.keys(errors).length > 0 && (
+        <div className="mt-4 text-red-500">
+          {Object.keys(errors).map((key) => (
+            <p key={key}>{errors[key]}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
