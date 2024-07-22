@@ -3,6 +3,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from mnemonic import Mnemonic
 from .models import Transaction  # Import the Transaction model
 
 CustomUser = get_user_model()
@@ -11,11 +12,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     wallet_address = serializers.CharField(read_only=True)
+    mnemonic_phrase = serializers.CharField(read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password', 'password2', 'wallet_address')
-        extra_kwargs = {'wallet_address': {'read_only': True}}
+        fields = ('username', 'email', 'password', 'password2', 'wallet_address', 'mnemonic_phrase')
 
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -28,9 +29,15 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        # Generate the mnemonic phrase
+        mnemo = Mnemonic("english")
+        mnemonic_phrase = mnemo.generate(strength=128)  # Generates a 12-word phrase
+        print(mnemonic_phrase)
+
         user = CustomUser(
             username=validated_data['username'],
             email=validated_data['email'],
+            mnemonic_phrase=mnemonic_phrase
         )
         user.set_password(validated_data['password'])
         user.save()
