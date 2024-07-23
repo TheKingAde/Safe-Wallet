@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa'; // Import spinner icon
+import { FaSpinner } from 'react-icons/fa';
 
 function LoginForm({ onSwitch }) {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ function LoginForm({ onSwitch }) {
     }
 
     console.log(`Logging in with Identifier: ${identifier}, Password: ${password}`);
-    setLoading(true); // Start loading spinner
+    setLoading(true);
     try {
       const response = await fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
@@ -57,12 +57,16 @@ function LoginForm({ onSwitch }) {
       console.error('Network error:', error);
       setErrors({ network: 'Network error occurred. Please try again later.' });
     } finally {
-      setLoading(false); // Stop loading spinner
+      setLoading(false);
     }
   };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleForgotPassword = () => {
+    navigate('/forgot-password');
   };
 
   return (
@@ -106,6 +110,9 @@ function LoginForm({ onSwitch }) {
         {errors.login && <p className="text-red-500 text-sm mt-1">{errors.login}</p>}
         {errors.network && <p className="text-red-500 text-sm mt-1">{errors.network}</p>}
       </div>
+      <p className="mt-4 text-base lg:text-lg">
+        <button onClick={handleForgotPassword} className="text-green-500 hover:underline">Forgot password?</button>
+      </p>
       <p className="mt-6 text-base lg:text-lg">
         Don't have an account? <button onClick={onSwitch} className="text-green-500 hover:underline">Sign Up</button>
       </p>
