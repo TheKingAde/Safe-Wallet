@@ -6,6 +6,8 @@ import Layout from './components/Layout';
 import { useAuthForm } from './hooks/useAuthForm';
 import Dashboard from './components/Dashboard';
 import LandingPage from './components/landing-page';
+import ForgotPasswordPage from './components/ForgotPasswordPage'; // Import the ForgotPasswordPage
+import ResetPasswordPage from './components/ResetPasswordPage'; // Import the ResetPasswordPage
 
 function App() {
   const { isLogin, handleSwitch } = useAuthForm();
@@ -23,6 +25,22 @@ function App() {
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/forgot-password"
+          element={
+            <Layout>
+              <ForgotPasswordPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <Layout>
+              <ResetPasswordPage />
+            </Layout>
+          }
+        />
       </Routes>
     </Router>
   );
