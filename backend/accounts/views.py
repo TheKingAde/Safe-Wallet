@@ -4,6 +4,7 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from bitcoinlib.wallets import Wallet
 from .serializers import RegisterSerializer, LoginSerializer, TransactionSerializer
@@ -136,3 +137,37 @@ class TransactionListView(APIView):
         except Exception as e:
             print(f"Debug: Exception occurred: {str(e)}")
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VerifyMnemonicView(APIView):
+    def post(self, request):
+        mnemonic = request.data.get('mnemonic')
+        if not mnemonic:
+            return Response({'detail': 'Mnemonic key phrase is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Check if the mnemonic matches any user
+            user = CustomUser.objects.get(mnemonic_phrase=mnemonic)
+            # Create a token for password reset
+            token = AccessToken.for_user(user)
+            return Response({'token': str(token)}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({'detail': 'Invalid mnemonic key phrase'}, status=status.HTTP_400_BAD_REQUEST)
+
+class ResetPasswordView(APIView):
+    def post(self, request):
+        token = request.data.get('token')
+        new_password = request.data.get('password')
+
+        if not token or not new_password:
+            return Response({'detail': 'Token and new password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Decode token and get user
+            access_token = AccessToken(token)
+            user = CustomUser.objects.get(id=access_token['user_id'])
+            user.set_password(new_password)
+            user.save()
+            return Response({'detail': 'Password reset successful'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
