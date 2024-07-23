@@ -104,6 +104,9 @@ function SignUpForm({ onSwitch }) {
     onSwitch(); // Switch to login page
   };
 
+  // Split the mnemonic into words
+  const mnemonicWords = mnemonic.split(' ');
+
   return (
     <div className="flex flex-col items-center w-full max-w-lg px-4">
       <h2 className="text-3xl lg:text-4xl font-bold mb-6">Sign Up</h2>
@@ -187,7 +190,11 @@ function SignUpForm({ onSwitch }) {
           <p className="text-lg font-bold mb-4">Sign Up Successful!</p>
           <p className="mb-4">Your mnemonic phrase:</p>
           <div className="mb-4 bg-white p-2 rounded shadow-md">
-            <p className="text-lg font-bold text-red-500">{mnemonic}</p>
+            {mnemonicWords.map((word, index) => (
+              <p key={index} className="text-lg font-bold text-red-500">
+                {index + 1}. {word}
+              </p>
+            ))}
           </div>
           <p className="text-sm text-yellow-600">
             Do not share these phrases with anyone. Losing these phrases means you could lose access to your funds. These phrases are used for account recovery.
