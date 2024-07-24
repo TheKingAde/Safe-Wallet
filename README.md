@@ -187,10 +187,6 @@ To contribute to the project, follow these steps:
 
 We welcome contributions!
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
 For any inquiries, please contact us at [theking-ade@outlook.com](mailto:theking-ade@outlook.com).
