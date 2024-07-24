@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShieldAlt, FaLock, FaBitcoin, FaChartLine, FaPaperPlane, FaInbox, FaHistory, FaComments, FaEnvelopeOpenText, FaHeadset, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Import additional icons
 import logo from '../assets/wallet.png';
-import './LandingPage.css'; // Import your custom CSS
+import './LandingPage.css'; // Import custom CSS
 
 const LandingPage = () => {
   return (
