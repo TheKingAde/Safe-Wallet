@@ -57,14 +57,9 @@ class SendTransactionView(APIView):
         amount = request.data.get('amount')
         to_address = request.data.get('to_address')
 
-        print("Received request data:", request.data)  # Log the incoming data
-        print("Received request data:", request.data)  # Log the incoming data
-
 
         if not amount or not to_address:
             return Response({"error": "Amount and Bitcoin address are required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        print("Received request data:", request.data)  # Log the incoming data
 
         try:
             amount = int(amount)
@@ -72,24 +67,13 @@ class SendTransactionView(APIView):
         except ValueError:
             return Response({"error": "Amount must be an integer"}, status=status.HTTP_400_BAD_REQUEST)
 
-        print("Received request data:", request.data)  # Log the incoming data
-
         try:
-            print("Received request data:4", request.data)
             wallet = Wallet(user.username)  # Initialize the wallet with the username
             print(wallet)
-            print("Received request data:3", request.data)
             if not wallet:
                 return Response({"error": "Wallet not found"}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Ensure the wallet has enough balance for the transaction
-            print("Received request data:2", request.data)
-            # if wallet.balance() < amount:
-            #     print("21.")
-            #     return Response({"error": "Insufficient balance"}, status=status.HTTP_400_BAD_REQUEST)
-            print("Received request data:7", request.data)
             # Perform the transaction
-            print("Received request data:1", request.data)
             tx = wallet.send_to(to_address, amount)
             return Response({"transaction_id": tx.txid()}, status=status.HTTP_200_OK)
         except Exception as e:
