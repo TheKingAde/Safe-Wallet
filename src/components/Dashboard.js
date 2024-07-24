@@ -8,14 +8,14 @@ function Dashboard() {
   const [showOptions, setShowOptions] = useState(false);
   const [showReceiveBox, setShowReceiveBox] = useState(false);
   const [showSendBox, setShowSendBox] = useState(false);
-  const [showTransactionsBox, setShowTransactionsBox] = useState(false); // New state for transactions
-  const [transactions, setTransactions] = useState([]); // New state for storing transactions
+  const [showTransactionsBox, setShowTransactionsBox] = useState(false); // state for transactions
+  const [transactions, setTransactions] = useState([]); // state for storing transactions
   const [transactionsError, setTransactionsError] = useState(''); // Error state for transactions
   const navigate = useNavigate();
   const optionsRef = useRef();
   const receiveBoxRef = useRef();
   const sendBoxRef = useRef();
-  const transactionsBoxRef = useRef(); // New ref for transactions box
+  const transactionsBoxRef = useRef(); // ref for transactions box
   const [amountInput, setAmountInput] = useState('');
   const [btcAddressInput, setBTCAddressInput] = useState('');
   const [amountError, setAmountError] = useState('');
@@ -117,7 +117,7 @@ function Dashboard() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
       }
-
+      // eslint-disable-next-line
       const data = await response.json();
       alert('Transaction successful!');
 
@@ -318,33 +318,48 @@ function Dashboard() {
 
       {showTransactionsBox && (
         <div
-          className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ background: 'rgba(0, 0, 0, 0.5)' }}
+          ref={transactionsBoxRef}
+          className="absolute inset-0 flex items-center justify-center z-50"
         >
-          <div
-            className="bg-white p-4 rounded shadow-md w-4/5 md:w-1/3 relative"
-            ref={transactionsBoxRef}
-          >
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-4xl">
+            <h3 className="text-lg md:text-xl font-semibold mb-4">Transaction History</h3>
+            {transactionsError && <p className="text-red-500">{transactionsError}</p>}
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Date/Time</th>
+                  <th className="py-2 px-4 border-b">Transaction ID</th>
+                  <th className="py-2 px-4 border-b">Amount (BTC)</th>
+                  <th className="py-2 px-4 border-b">To Address</th>
+                  <th className="py-2 px-4 border-b">Confirmations</th>
+                  <th className="py-2 px-4 border-b">Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.length > 0 ? (
+                  transactions.map((transaction, index) => (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b">{transaction.timestamp}</td>
+                      <td className="py-2 px-4 border-b">{transaction.txid}</td>
+                      <td className="py-2 px-4 border-b">{transaction.amount}</td>
+                      <td className="py-2 px-4 border-b">{transaction.to_address}</td>
+                      <td className="py-2 px-4 border-b">{transaction.confirmations}</td>
+                      <td className="py-2 px-4 border-b">{transaction.type}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="py-2 px-4 text-center">Nothing to see here</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="bg-gray-500 text-white px-4 py-2 mt-4 rounded shadow"
               onClick={() => setShowTransactionsBox(false)}
             >
-              <i className="fas fa-times"></i>
+              Close
             </button>
-            <h3 className="text-lg md:text-xl font-semibold mb-4">Transaction History</h3>
-            {transactionsError}
-            <ul>
-              {transactions.length > 0 ? (
-                transactions.map((transaction, index) => (
-                  <li key={index} className="mb-2">
-                    {/* Render each transaction */}
-                    <span>{transaction.date}: {transaction.amount} BTC</span>
-                  </li>
-                ))
-              ) : (
-                <p>Nothing to see here</p>
-              )}
-            </ul>
           </div>
         </div>
       )}
