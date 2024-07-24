@@ -1,5 +1,4 @@
-# accounts/views.py
-
+from datetime import datetime
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -102,6 +101,7 @@ class TransactionListView(APIView):
 
     def get(self, request):
         user = request.user
+
         try:
             wallet_address = user.wallet_address
             print(f"Debug: User wallet address: {wallet_address}")
@@ -137,6 +137,36 @@ class TransactionListView(APIView):
         except Exception as e:
             print(f"Debug: Exception occurred: {str(e)}")
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Uncomment to use mock data for Transaction History
+        # mock_data = [
+        # {
+        # 'txid': 'test_txid_1',
+        # 'timestamp': datetime.fromtimestamp(1627900000).strftime('%Y-%m-%d %H:%M:%S'),
+        # 'amount': 0.005,
+        # 'to_address': 'test_address_1',
+        # 'confirmations': 10,
+        # 'type': 'receive'
+        # },
+        # {
+        # 'txid': 'test_txid_2',
+        # 'timestamp': datetime.fromtimestamp(1627900100).strftime('%Y-%m-%d %H:%M:%S'),
+        # 'amount': 0.01,
+        # 'to_address': 'test_address_2',
+        # 'confirmations': 5,
+        # 'type': 'send'
+        # },
+        # {
+        # 'txid': 'test_txid_3',
+        # 'timestamp': datetime.fromtimestamp(1627900200).strftime('%Y-%m-%d %H:%M:%S'),
+        # 'amount': 0.02,
+        # 'to_address': 'test_address_3',
+        # 'confirmations': 0,
+        # 'type': 'receive'
+        # }
+        # ]
+        #
+        # return Response(mock_data, status=status.HTTP_200_OK)
 
 
 class VerifyMnemonicView(APIView):
