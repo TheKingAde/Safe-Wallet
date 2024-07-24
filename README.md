@@ -1,70 +1,196 @@
-# Getting Started with Create React App
+# Safe Wallet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Safe Wallet is a Bitcoin wallet web application that allows users to securely store, send, and receive Bitcoin. This application is built using React for the frontend and Django for the backend, with MySQL as the database.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Project Description](#project-description)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup Instructions](#setup-instructions)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Project Structure](#project-structure)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-### `npm start`
+## Project Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Safe Wallet is designed to provide users with a simple and secure way to manage their Bitcoin. Users can create an account, generate a Bitcoin wallet, view their balance, send and receive Bitcoin, and view their transaction history.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- User authentication (sign-up, login, password reset)
+- Bitcoin wallet creation upon registration
+- View Bitcoin balance and wallet address
+- Send Bitcoin to other addresses
+- Receive Bitcoin
+- View transaction history
+- Responsive design for mobile, tablet, and desktop
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+### Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- React
+- Tailwind CSS
+- React Router DOM
+- React Icons
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Django
+- Django REST Framework
+- SQLite
+- SimpleJWT
+- bitcoinlib
 
-### `npm run eject`
+## Setup Instructions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Python and pip
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Frontend Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/TheKingAde/safe-wallet.git
+    cd safe-wallet/
+    ```
 
-## Learn More
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Start the development server:
+    ```bash
+    npm start
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Backend Setup
 
-### Code Splitting
+1. Set up a virtual environment:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. Navigate to the backend directory:
+    ```bash
+    cd backend/
+    ```
 
-### Analyzing the Bundle Size
+3. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+4. Configure MySQL database:
+    - Create a database named `safe_wallet`.
+    - Update the database settings in `backend/settings.py`:
+      ```python
+      DATABASES = {
+          'default': {
+              'ENGINE': 'django.db.backends.mysql',
+              'NAME': 'safe_wallet',
+              'USER': 'yourusername',
+              'PASSWORD': 'yourpassword',
+              'HOST': 'localhost',
+              'PORT': '3306',
+          }
+      }
+      ```
 
-### Making a Progressive Web App
+5. Run database migrations:
+    ```bash
+    python manage.py migrate
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+6. Create a superuser:
+    ```bash
+    python manage.py createsuperuser
+    ```
 
-### Advanced Configuration
+7. Start the Django development server:
+    ```bash
+    python manage.py runserver
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Usage
 
-### Deployment
+### Registration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Navigate to the registration page.
+2. Fill out the registration form with your details.
+3. Upon successful registration, your Bitcoin wallet will be created, and you will be redirected to the login page.
 
-### `npm run build` fails to minify
+### Login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Navigate to the login page.
+2. Enter your credentials to log in.
+3. After logging in, you will be taken to your dashboard, where you can view your balance and wallet address.
+
+### Sending Bitcoin
+
+1. Click on the send button.
+2. Enter the recipient's address and the amount to send.
+3. Submit the form to initiate the transaction.
+
+### Receiving Bitcoin
+
+1. Click on the receive button.
+2. Your wallet address will be displayed. Share this address with the sender.
+
+### Viewing Transaction History
+
+1. Click on the transaction history button.
+2. View a list of your past transactions.
+
+## API Endpoints
+
+### User Authentication
+
+- `POST /api/register/` - Register a new user
+- `POST /api/login/` - Login a user
+- `POST /api/verify-mnemonic/` - Verify mnemonic for password reset
+- `POST /api/reset-password/` - Reset password with token
+
+### Bitcoin Transactions
+
+- `POST /api/send-transaction/` - Send Bitcoin
+- `GET /api/transaction-list/` - Get transaction history
+
+## Development
+
+To contribute to the project, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+3. Make your changes and commit them:
+    ```bash
+    git commit -m 'Add some feature'
+    ```
+4. Push to the branch:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+5. Open a pull request.
+
+## Contributing
+
+We welcome contributions!
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any inquiries, please contact us at [theking-ade@outlook.com](mailto:theking-ade@outlook.com).
