@@ -1,6 +1,6 @@
 # Safe Wallet
 
-Safe Wallet is a Bitcoin wallet web application that allows users to securely store, send, and receive Bitcoin. This application is built using React for the frontend and Django for the backend, with MySQL as the database.
+Safe Wallet is a Bitcoin wallet web application that allows users to securely store, send, and receive Bitcoin. This application is built using React for the frontend and Django for the backend, with SQLite as the database.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ Safe Wallet is designed to provide users with a simple and secure way to manage 
 
 - User authentication (sign-up, login, password reset)
 - Bitcoin wallet creation upon registration
-- View Bitcoin balance and wallet address
+- View Bitcoin balance, Bitcoin chart and wallet address
 - Send Bitcoin to other addresses
 - Receive Bitcoin
 - View transaction history
