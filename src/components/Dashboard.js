@@ -4,7 +4,7 @@ import BitcoinChart from './BitcoinChart'; // Import the BitcoinChart component
 
 function Dashboard() {
   const location = useLocation();
-  const { walletAddress, balance, username } = location.state || {}; // Assuming username is passed in state
+  const { walletAddress, balance, username } = location.state || {}; // Extract from state
   const [showOptions, setShowOptions] = useState(false);
   const [showReceiveBox, setShowReceiveBox] = useState(false);
   const [showSendBox, setShowSendBox] = useState(false);
@@ -27,6 +27,7 @@ function Dashboard() {
     navigate('/');
   };
 
+  // close UI components when a user clicks outside of them
   const handleClickOutside = (event) => {
     if (optionsRef.current && !optionsRef.current.contains(event.target)) {
       setShowOptions(false);
@@ -42,6 +43,7 @@ function Dashboard() {
     }
   };
 
+  // used to manage event listeners for detecting clicks outside the UI elements
   useEffect(() => {
     if (showOptions || showReceiveBox || showSendBox || showTransactionsBox) {
       document.addEventListener('mousedown', handleClickOutside);
@@ -73,6 +75,7 @@ function Dashboard() {
       return;
     }
 
+    // get token from local storage
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -176,6 +179,8 @@ function Dashboard() {
   return (
     <div className="relative flex flex-col min-h-screen">
       {(showReceiveBox || showSendBox || showTransactionsBox) && <div className="absolute inset-0 bg-gray-900 bg-opacity-50 z-40"></div>}
+
+      {/* Header section*/}
       <header className="bg-green-500 text-white p-4 flex justify-between items-center">
         <h1 className="text-xl md:text-2xl font-bold"><button onClick={handlePageReload}>Dashboard</button></h1>
         <div className="relative" ref={optionsRef}>
@@ -195,6 +200,8 @@ function Dashboard() {
           )}
         </div>
       </header>
+
+      {/*Main section*/}
       <main className={`flex flex-col items-center justify-center flex-grow p-4 ${(showReceiveBox || showSendBox || showTransactionsBox) ? 'blur' : ''}`}>
         <div className="text-center">
           <div className="flex flex-col md:flex-row items-center justify-center mb-2 md:mb-4">
@@ -226,6 +233,7 @@ function Dashboard() {
         </div>
       </main>
 
+      {/* Receive component*/}
       {showReceiveBox && (
         <div
           className="fixed inset-0 flex items-center justify-center z-50"
@@ -261,6 +269,7 @@ function Dashboard() {
         </div>
       )}
 
+      {/* Send Component */}
       {showSendBox && (
         <div
           className="fixed inset-0 flex items-center justify-center z-50"
@@ -316,6 +325,7 @@ function Dashboard() {
         </div>
       )}
 
+      {/* Transaction history component*/}
       {showTransactionsBox && (
         <div
           ref={transactionsBoxRef}
@@ -363,6 +373,7 @@ function Dashboard() {
           </div>
         </div>
       )}
+      
     </div>
   );
 }
