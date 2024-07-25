@@ -6,8 +6,8 @@ import Layout from './components/Layout';
 import { useAuthForm } from './hooks/useAuthForm';
 import Dashboard from './components/Dashboard';
 import LandingPage from './components/landing-page';
-import ForgotPasswordPage from './components/ForgotPasswordPage'; // Import the ForgotPasswordPage
-import ResetPasswordPage from './components/ResetPasswordPage'; // Import the ResetPasswordPage
+import ForgotPasswordPage from './components/ForgotPasswordPage';
+import ResetPasswordPage from './components/ResetPasswordPage';
 
 function App() {
   const { isLogin, handleSwitch } = useAuthForm();
