@@ -355,7 +355,7 @@ function Dashboard() {
               </tbody>
             </table>
             <button
-              className="bg-gray-500 text-white px-4 py-2 mt-4 rounded shadow"
+              className="bg-green-500 text-white px-4 py-2 mt-4 rounded shadow"
               onClick={() => setShowTransactionsBox(false)}
             >
               Close
