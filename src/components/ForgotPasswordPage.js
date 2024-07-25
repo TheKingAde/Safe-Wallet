@@ -9,7 +9,9 @@ function ForgotPasswordPage() {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
+  // define async function
   const handleSubmit = async (e) => {
+    // stop default action assocaited with an event
     e.preventDefault();
     let newErrors = {};
 
@@ -17,6 +19,7 @@ function ForgotPasswordPage() {
       newErrors.mnemonic = 'Mnemonic key phrase is required';
     }
 
+    // If errors, update state and stop execution.
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
