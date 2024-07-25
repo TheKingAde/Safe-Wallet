@@ -1,4 +1,3 @@
-// LandingPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShieldAlt, FaLock, FaBitcoin, FaChartLine, FaPaperPlane, FaInbox, FaHistory, FaComments, FaEnvelopeOpenText, FaHeadset, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
@@ -9,6 +8,7 @@ import logo from '../assets/wallet.png';
 const LandingPage = () => {
   return (
     <div className="landing-page">
+      {/* Header section start */}
       <header className="bg-green-500 text-white p-4 flex justify-between items-center fixed w-full top-0 z-50">
         <div className="flex items-center">
           <img src={logo} alt="logo" className="w-8 h-8 mr-2" />
@@ -39,6 +39,8 @@ const LandingPage = () => {
           </Carousel>
         </div>
       </section>
+      {/* Header section end */}
+
       <section className="bg-white py-20">
         <div className="container mx-auto px-4 text-center">
           <Link
@@ -48,6 +50,8 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Hero section start */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-12">Safe and Secure</h2>
@@ -70,6 +74,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      {/* Hero section end */}
+
+      {/* Features section start */}
       <section className="bg-white-100 py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-12">Features</h2>
@@ -102,6 +109,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      {/* Features section end */}
+
+      {/* Help section start */}
       <section className="bg-green-500 text-white py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-12">Help</h2>
@@ -136,6 +146,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      {/* Help section end */}
+
+      {/* Footer */}
       <footer className="bg-green-500 text-white py-6">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="text-sm">
