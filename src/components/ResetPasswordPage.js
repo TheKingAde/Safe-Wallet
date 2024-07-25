@@ -9,7 +9,7 @@ function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { token } = location.state;
+  const { token } = location.state; // retrieve token
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ function ResetPasswordPage() {
       newErrors.password2 = 'Passwords do not match';
     }
 
+    // If errors, update state and stop execution.
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
