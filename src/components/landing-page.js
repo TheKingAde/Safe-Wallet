@@ -1,8 +1,10 @@
+// LandingPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaShieldAlt, FaLock, FaBitcoin, FaChartLine, FaPaperPlane, FaInbox, FaHistory, FaComments, FaEnvelopeOpenText, FaHeadset, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Import additional icons
+import { FaShieldAlt, FaLock, FaBitcoin, FaChartLine, FaPaperPlane, FaInbox, FaHistory, FaComments, FaEnvelopeOpenText, FaHeadset, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import logo from '../assets/wallet.png';
-import './LandingPage.css'; // Import custom CSS
 
 const LandingPage = () => {
   return (
@@ -27,9 +29,18 @@ const LandingPage = () => {
       </header>
       <section className="welcome-section relative text-center py-20 bg-green-500 pt-24">
         <div className="welcome-text-wrapper relative z-10">
-          <h1 className="welcome-text text-6xl font-bold mb-4">Welcome to</h1>
-          <h2 className="welcome-text text-6xl font-bold mb-4">Safe Wallet</h2>
-          <p className="text-2xl text-white mb-8">Your secure Bitcoin Wallet</p>
+          <Carousel showThumbs={false} showStatus={false} autoPlay infiniteLoop interval={5000} showIndicators={false}>
+            <div>
+              <h1 className="welcome-text text-6xl font-bold mb-4 text-white">Welcome to Safe Wallet</h1>
+            </div>
+            <div>
+              <h2 className="welcome-text text-6xl font-bold mb-4 text-white">Your secure Crypto Wallet</h2>
+            </div>
+          </Carousel>
+        </div>
+      </section>
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4 text-center">
           <Link
             to="/auth" className="btn btn-primary border-2 border-white bg-green-500 text-white text-lg font-bold py-3 px-6 rounded hover:text-green-500 hover:bg-white"
           >
@@ -42,19 +53,19 @@ const LandingPage = () => {
           <h2 className="text-5xl font-bold text-center mb-12">Safe and Secure</h2>
           <div className="flex flex-wrap justify-center items-center">
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaShieldAlt className="text-6xl text-green-500 mb-4" />
+              <FaShieldAlt className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Highly Secure</h3>
-              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac leo nunc. Vestibulum et mauris vel ante finibus maximus nec ut leo.</p>
+              <p className="text-gray-700">Our wallet uses state-of-the-art encryption to protect your assets, ensuring that only you have access to your funds.</p>
             </div>
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaLock className="text-6xl text-green-500 mb-4" />
+              <FaLock className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Encrypted</h3>
-              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac leo nunc. Vestibulum et mauris vel ante finibus maximus nec ut leo.</p>
+              <p className="text-gray-700">We utilize robust encryption methods to keep your private keys and data secure from unauthorized access.</p>
             </div>
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaBitcoin className="text-6xl text-green-500 mb-4" />
+              <FaBitcoin className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Trusted</h3>
-              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac leo nunc. Vestibulum et mauris vel ante finibus maximus nec ut leo.</p>
+              <p className="text-gray-700">Join millions of users who trust Safe Wallet to manage and protect their cryptocurrency investments.</p>
             </div>
           </div>
         </div>
@@ -64,29 +75,29 @@ const LandingPage = () => {
           <h2 className="text-5xl font-bold text-center mb-12">Features</h2>
           <div className="flex flex-wrap justify-center items-center">
             <div className="w-full md:w-1/5 p-4 text-center flex-center">
-              <FaChartLine className="text-6xl text-green-500 mb-4" />
+              <FaChartLine className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Bitcoin Chart</h3>
-              <p className="text-gray-700">View real-time Bitcoin price charts and historical data.</p>
+              <p className="text-gray-700">Monitor Bitcoin price trends and analyze historical data to make informed decisions.</p>
             </div>
             <div className="w-full md:w-1/5 p-4 text-center flex-center">
-              <FaPaperPlane className="text-6xl text-green-500 mb-4" />
+              <FaPaperPlane className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Send BTC</h3>
-              <p className="text-gray-700">Easily send Bitcoin to any wallet address with a few clicks.</p>
+              <p className="text-gray-700">Send Bitcoin to any address quickly and securely with our easy-to-use interface.</p>
             </div>
             <div className="w-full md:w-1/5 p-4 text-center flex-center">
-              <FaInbox className="text-6xl text-green-500 mb-4" />
+              <FaInbox className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Receive BTC</h3>
-              <p className="text-gray-700">Generate unique addresses to receive Bitcoin securely.</p>
+              <p className="text-gray-700">Generate unique wallet addresses to receive Bitcoin safely and efficiently.</p>
             </div>
             <div className="w-full md:w-1/5 p-4 text-center flex-center">
-              <FaHistory className="text-6xl text-green-500 mb-4" />
+              <FaHistory className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Transaction History</h3>
-              <p className="text-gray-700">View your transaction history and keep track of your transfers.</p>
+              <p className="text-gray-700">Keep track of all your transactions with our detailed history feature.</p>
             </div>
             <div className="w-full md:w-1/5 p-4 text-center flex-center">
-              <FaLock className="text-6xl text-green-500 mb-4" />
+              <FaLock className="text-6xl text-green-500 mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Store BTC Safely</h3>
-              <p className="text-gray-700">Keep your Bitcoin safe with our advanced security features.</p>
+              <p className="text-gray-700">Our wallet offers advanced security features to ensure your Bitcoin is stored safely and securely.</p>
             </div>
           </div>
         </div>
@@ -96,62 +107,58 @@ const LandingPage = () => {
           <h2 className="text-5xl font-bold text-center mb-12">Help</h2>
           <div className="flex flex-wrap justify-center items-center">
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaHeadset className="text-6xl text-white mb-4" />
+              <FaHeadset className="text-6xl text-white mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Questions?</h3>
-              <p className="text-gray-200">We’re here for you</p>
+              <p className="text-gray-200 mb-4">Our support team is here to assist you with any questions or issues you may have.</p>
             </div>
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaComments className="text-6xl text-white mb-4" />
+              <FaComments className="text-6xl text-white mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Community</h3>
-              <p className="text-gray-200">Join our online community so you can be the first to hear about company news, new products and more.</p>
+              <p className="text-gray-200 mb-4">Join our community to stay updated on the latest news, product updates, and more.</p>
               <Link
-                to="/community" className="btn btn-secondary border-2 border-white text-white text-lg px-4 py-2 rounded hover:bg-white hover:text-green-500 font-bold mt-4"
+                to="/community"
+                className="btn btn-secondary border-2 border-white text-white text-lg px-4 py-2 rounded hover:bg-white hover:text-green-500 font-bold mt-6"
               >
                 Join us
               </Link>
             </div>
             <div className="w-full md:w-1/3 p-4 text-center flex-center">
-              <FaEnvelopeOpenText className="text-6xl text-white mb-4" />
+              <FaEnvelopeOpenText className="text-6xl text-white mb-4 mx-auto" />
               <h3 className="text-2xl font-bold mb-2">Contact us</h3>
-              <p className="text-gray-200">Our Helpdesk is filled with in-depth articles, and if you need more help, we are always available to lend a helping hand through our contact form.</p>
+              <p className="text-gray-200 mb-4">For inquiries or support, feel free to reach out to us directly.</p>
               <Link
-                to="/helpdesk" className="btn btn-secondary border-2 border-white text-white text-lg px-4 py-2 rounded hover:bg-white hover:text-green-500 font-bold mt-4"
+                to="/contact"
+                className="btn btn-secondary border-2 border-white text-white text-lg px-4 py-2 rounded hover:bg-white hover:text-green-500 font-bold mt-6"
               >
-                Go to Helpdesk
+                Contact
               </Link>
             </div>
           </div>
         </div>
       </section>
-      <footer className="bg-gray-800 text-white py-10">
-        <div className="container mx-auto px-4 text-center">
-          <div className="mb-6">
-            <img src={logo} alt="logo" className="w-12 h-12 mx-auto mb-4" />
-            <p className="text-lg font-bold">Safe Wallet</p>
-            <p className="text-gray-400">Your secure Bitcoin Wallet</p>
+      <footer className="bg-green-500 text-white py-6">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="text-sm">
+            &copy; {new Date().getFullYear()} Safe Wallet. All rights reserved.
           </div>
-          <div className="flex justify-center mb-6">
-            <Link to="/facebook" className="mx-2 text-white hover:text-gray-400">
-              <FaFacebook size={24} />
-            </Link>
-            <Link to="/twitter" className="mx-2 text-white hover:text-gray-400">
-              <FaTwitter size={24} />
-            </Link>
-            <Link to="/instagram" className="mx-2 text-white hover:text-gray-400">
-              <FaInstagram size={24} />
-            </Link>
-            <Link to="/linkedin" className="mx-2 text-white hover:text-gray-400">
-              <FaLinkedin size={24} />
-            </Link>
-          </div>
-          <div className="text-gray-400">
-            <p>&copy; 2024 Safe Wallet. All rights reserved.</p>
-            <Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link> | <Link to="/terms-of-service" className="hover:text-white">Terms of Service</Link>
+          <div className="flex space-x-4">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-green-200">
+              <FaFacebook />
+            </a>
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-green-200">
+              <FaTwitter />
+            </a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-green-200">
+              <FaInstagram />
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-green-200">
+              <FaLinkedin />
+            </a>
           </div>
         </div>
       </footer>
     </div>
   );
-}
+};
 
 export default LandingPage;
